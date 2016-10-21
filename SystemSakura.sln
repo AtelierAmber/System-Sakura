@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SystemSakura", "SystemSakura\SystemSakura.vcxproj", "{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{439D0B79-3A72-4218-B758-9B238D9FBB81}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5} = {7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TemplateProject", "TemplateProject\TemplateProject.vcxproj", "{62CA2268-5557-4610-8841-F861CCD6A1E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5} = {7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Ubuntu = Debug|Ubuntu
+		Debug|Win32 = Debug|Win32
+		Release|Ubuntu = Release|Ubuntu
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}.Debug|Ubuntu.ActiveCfg = Debug|Win32
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}.Debug|Win32.Build.0 = Debug|Win32
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}.Release|Ubuntu.ActiveCfg = Release|Win32
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}.Release|Win32.ActiveCfg = Release|Win32
+		{7B8585F8-48E4-4DA5-B6CF-4D6387ABC4C5}.Release|Win32.Build.0 = Release|Win32
+		{439D0B79-3A72-4218-B758-9B238D9FBB81}.Debug|Ubuntu.ActiveCfg = Debug|Win32
+		{439D0B79-3A72-4218-B758-9B238D9FBB81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{439D0B79-3A72-4218-B758-9B238D9FBB81}.Debug|Win32.Build.0 = Debug|Win32
+		{439D0B79-3A72-4218-B758-9B238D9FBB81}.Release|Ubuntu.ActiveCfg = Release|Win32
+		{439D0B79-3A72-4218-B758-9B238D9FBB81}.Release|Win32.ActiveCfg = Release|Win32
+		{439D0B79-3A72-4218-B758-9B238D9FBB81}.Release|Win32.Build.0 = Release|Win32
+		{62CA2268-5557-4610-8841-F861CCD6A1E3}.Debug|Ubuntu.ActiveCfg = Debug|Win32
+		{62CA2268-5557-4610-8841-F861CCD6A1E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{62CA2268-5557-4610-8841-F861CCD6A1E3}.Debug|Win32.Build.0 = Debug|Win32
+		{62CA2268-5557-4610-8841-F861CCD6A1E3}.Release|Ubuntu.ActiveCfg = Release|Win32
+		{62CA2268-5557-4610-8841-F861CCD6A1E3}.Release|Win32.ActiveCfg = Release|Win32
+		{62CA2268-5557-4610-8841-F861CCD6A1E3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
