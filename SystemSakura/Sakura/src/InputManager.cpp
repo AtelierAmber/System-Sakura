@@ -2,21 +2,16 @@
 
 namespace Sakura {
 
-#define frames_per_key_update 2
-
 	InputManager::InputManager() : m_mouseCoords(0.0f){}
 	InputManager::~InputManager(){}
 
 	void InputManager::update(){
-		if (m_updateItter > frames_per_key_update){
-			m_updateItter = 0;
-		}
-		if (m_updateItter == 0){
-			for (auto& it : m_keyMap){
-				m_previousKeyMap[it.first] = it.second;
+		for (auto& it : m_keyMap){
+			if (m_previousKeyMap[it.first].pressedTimer <= 0){
+				m_previousKeyMap[it.first].pressed = it.second;
 			}
+			else --m_previousKeyMap[it.first].pressedTimer;
 		}
-		m_updateItter++;
 	}
 
 	void InputManager::pressKey(KeyCode keyID) {
@@ -27,6 +22,7 @@ namespace Sakura {
 
 	void InputManager::releaseKey(KeyCode keyID) {
 		m_keyMap[keyID] = false;
+		m_previousKeyMap[keyID] = true;
 	}
 
 	void InputManager::setMouseCoords(float x, float y) {
@@ -62,7 +58,7 @@ namespace Sakura {
 		auto it = m_previousKeyMap.find(keyID);
 		if (it != m_previousKeyMap.end()) {
 			// Found the key
-			return it->second;
+			return it->second.pressed;
 		}
 		else {
 			// Didn't find the key

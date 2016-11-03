@@ -20,16 +20,12 @@ namespace Sakura {
 
         //Read in the image file contents into a buffer
         if (IOManager::readFileToBuffer(filePath, in) == false) {
-			fprintf(stderr, "Failed to load PNG file to buffer!\n");
-			fflush(stderr);
-			throw ImageLoader();
+			SAKURA_PRINT_ERROR(std::string("Failed to load PNG file to buffer! Does it exist at " + filePath + "?\n").c_str());
         }
 
         //Decode the .png format into an array of pixels
         int errorCode = decodePNG(out, width, height, &(in[0]), in.size());
-        if (errorCode != 0) {
-            fatalError("decodePNG failed with error: " + std::to_string(errorCode));
-        }
+		SAKURA_FATAL_ASSERT((errorCode == 0), std::string("decodePNG failed with error: " + std::to_string(errorCode)).c_str());
 
         //Generate the openGL texture object
         glGenTextures(1, &(texture.id));
@@ -99,11 +95,11 @@ namespace Sakura {
 				printf("WARNING : NO MIPMAP GENERATED FOR TEXTURE ID %d\n", texture.id);
 			}
 		}
-        
-
 
         //Unbind the texture
         glBindTexture(GL_TEXTURE_2D, 0);
+
+		SAKURA_ASSERT_GL_ERROR(glGetError());
 
         texture.width = width;
         texture.height = height;

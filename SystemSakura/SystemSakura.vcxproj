@@ -125,7 +125,6 @@
     <ClCompile Include="Sakura\src\Timing.cpp" />
     <ClCompile Include="Sakura\src\Window.cpp" />
     <ClCompile Include="Sakura\src\Sakura.cpp" />
-    <ClCompile Include="Sakura\src\SakuraErrors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sakura\include\GUIInterface.h" />

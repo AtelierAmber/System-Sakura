@@ -5,6 +5,6 @@
 #endif
 
 int main(int argc, char** argv){
-	BaseGame game("Game", (int)(1280), (int)(760), Sakura::WindowFlags::BORDERLESS , -100, -100);
+	BaseGame game("Game", (int)(1280), (int)(760), 0, -100, -100);
 	return game.run();
 }

@@ -83,9 +83,6 @@
     <ClCompile Include="Sakura\src\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sakura\src\SakuraErrors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sakura\src\AudioEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
