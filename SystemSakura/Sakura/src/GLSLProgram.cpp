@@ -25,8 +25,8 @@ namespace Sakura {
 		std::string vertSource;
 		std::string fragSource;
 
-		IOManager::readFileToBuffer(vertexShaderFilePath, vertSource);
-		IOManager::readFileToBuffer(fragmentShaderFilePath, fragSource);
+		SAKURA_STATIC_ASSERT((IOManager::readFileToBuffer(vertexShaderFilePath, vertSource)), std::string("Could not find Vertex Shader at " + vertexShaderFilePath).c_str());
+		SAKURA_STATIC_ASSERT((IOManager::readFileToBuffer(fragmentShaderFilePath, fragSource)), std::string("Could not find Vertex Shader at " + vertexShaderFilePath).c_str());
 
 		compileShadersFromSource(vertSource.c_str(), fragSource.c_str());
     }
@@ -40,18 +40,20 @@ namespace Sakura {
 		//Create the vertex shader object, and store its ID
 		m_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 		if (m_vertexShaderID == 0) {
-			fatalError("Vertex shader failed to be created!");
+			SAKURA_THROW_FATAL("Vertex shader failed to be created!");
 		}
 
 		//Create the fragment shader object, and store its ID
 		m_fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 		if (m_fragmentShaderID == 0) {
-			fatalError("Fragment shader failed to be created!");
+			SAKURA_THROW_FATAL("Fragment shader failed to be created!");
 		}
 
 		//Compile each shader
 		compileShader(vertexSource, "Vertex Shader", m_vertexShaderID);
 		compileShader(fragmentSource, "Fragment Shader", m_fragmentShaderID);
+
+		SAKURA_ASSERT_GL_ERROR(glGetError());
 	}
 
     void GLSLProgram::linkShaders() {
@@ -75,8 +77,6 @@ namespace Sakura {
             std::vector<char> errorLog(maxLength);
 			glGetProgramInfoLog(m_programID, maxLength, &maxLength, &errorLog[0]);
 
-
-
             //We don't need the program anymore.
 			glDeleteProgram(m_programID);
             //Don't leak shaders either.
@@ -85,7 +85,7 @@ namespace Sakura {
 
             //print the error log and quit
             std::printf("%s\n", &(errorLog[0]));
-            fatalError("Shaders failed to link!");
+			SAKURA_THROW_FATAL("\nShaders failed to link!");
         }
 
         //Always detach shaders after a successful link.
@@ -93,6 +93,8 @@ namespace Sakura {
 		glDetachShader(m_programID, m_fragmentShaderID);
 		glDeleteShader(m_vertexShaderID);
 		glDeleteShader(m_fragmentShaderID);
+
+		SAKURA_ASSERT_GL_ERROR(glGetError());
     }
 
     //Adds an attribute to our shader. SHould be called between compiling and linking.
@@ -102,9 +104,7 @@ namespace Sakura {
 
     GLint GLSLProgram::getUniformLocation(const std::string& uniformName) {
 		GLint location = glGetUniformLocation(m_programID, uniformName.c_str());
-        if (location == GL_INVALID_INDEX) {
-            fatalError("Uniform " + uniformName + " not found in shader!");
-        }
+		SAKURA_STATIC_ASSERT((location != GL_INVALID_INDEX), std::string("Uniform " + uniformName + " not found in shader!").c_str());
         return location;
     }
 
@@ -166,8 +166,7 @@ namespace Sakura {
 
             //Print error log and quit
             std::printf("%s\n", &(errorLog[0]));
-			fatalError("Shader " + name + " failed to compile");
+			SAKURA_PRINT_ERROR(std::string("\nShader " + name + " failed to compile").c_str());
         }
     }
-
 }

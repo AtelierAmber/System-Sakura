@@ -14,7 +14,6 @@ namespace Sakura{
 
 	struct GUIButton{
 	public:
-#define button_pressed_text_offset 0.0f
 #define button_text_Y_padding 5.0f
 #define button_text_X_padding 2.5f
 		GUIButton(){}
@@ -49,25 +48,23 @@ namespace Sakura{
 			m_calltoFunction = nullptr;
 		}
 
-		void draw(SpriteBatch& spriteBatch, Camera2D& camera, const bool& hasText = false){
+		void draw(SpriteBatch& spriteBatch, Camera2D& camera, ColorRGBA8 textColor = ColorRGBA8(255,255,255,255), const bool& hasText = false){
 			//TODO: Make color changable per button
 			//glm::vec4 drawCoords(camera.convertScreenToWorld(glm::vec2(m_rect.x1, m_rect.y2)), m_rect.width, m_rect.height);
 			glm::vec4 drawCoords(m_rect.x1, m_rect.y2, m_rect.width, m_rect.height);
-			spriteBatch.draw(glm::vec4(drawCoords.x, drawCoords.y, drawCoords.z, drawCoords.w), m_texture.getUVs(m_currentTexture), m_texture.texture.id, ALWAYS_ON_TOP, ColorRGBA8(255, 255, 255, 255));
+			spriteBatch.draw(drawCoords, m_texture.getUVs(m_currentTexture), m_texture.texture.id, ALWAYS_ON_TOP, ColorRGBA8(255, 255, 255, 255));
 			if (hasText){
-				m_buttonFont.draw(spriteBatch, m_content.c_str(), glm::vec2(drawCoords.x + (drawCoords.z / 2) + m_textOffset, drawCoords.y + ((drawCoords.w / 2) - ((m_buttonFont.getFontHeight() / 2) * m_textScaling.y)) - m_textOffset - button_text_Y_padding / 2), m_textScaling, ALWAYS_ON_TOP, ColorRGBA8(255, 255, 255, 255), Justification::MIDDLE);
+				m_buttonFont.draw(spriteBatch, m_content.c_str(), glm::vec2(drawCoords.x + (drawCoords.z / 2), drawCoords.y + ((drawCoords.w / 2) - ((m_buttonFont.getFontHeight() / 2) * m_textScaling.y)) - button_text_Y_padding / 2), m_textScaling, ALWAYS_ON_TOP, textColor, Justification::MIDDLE);
 			}
 		}
 
 		bool update(InputManager &inputManager, Camera2D& camera){
 			glm::vec2 mouseCoords = camera.convertScreenToWorld(inputManager.getMouseCoords());
 			m_currentTexture = 0;
-			if (mouseCoords.x <= m_rect.x2 && mouseCoords.x >= m_rect.x1 && 
-				mouseCoords.y <= m_rect.y1 && mouseCoords.y >= m_rect.y2){
+			if (m_rect.pointIntersection(mouseCoords.x, mouseCoords.y)){
 				m_currentTexture = 1;
-				if (inputManager.wasKeyDown(MouseId::BUTTON_LEFT) && !inputManager.isKeyDown(MouseId::BUTTON_LEFT)){
-					m_currentTexture = 1;
-					m_textOffset = 0.0f;
+				if (inputManager.wasKeyDown(MouseId::BUTTON_LEFT) && !inputManager.isKeyDown(MouseId::BUTTON_LEFT) && m_pressed){
+					m_currentTexture = 0;
 					if (m_calltoFunction != nullptr){
 						m_calltoFunction();
 						m_pressed = false;
@@ -76,12 +73,10 @@ namespace Sakura{
 				}
 				if (inputManager.isKeyDown(MouseId::BUTTON_LEFT)){
 					m_currentTexture = 2;
-					m_textOffset = button_pressed_text_offset;
 					m_pressed = true;
 					return false;
 				}
 			}
-			m_textOffset = 0.0f;
 			m_pressed = false;
 			return false;
 		}
@@ -99,7 +94,6 @@ namespace Sakura{
 
 		SpriteFont m_buttonFont;
 
-		float m_textOffset = 0.0f;
 		glm::vec2 m_textScaling = glm::vec2(1.0f);
 
 		unsigned int m_currentTexture = 0;
@@ -136,10 +130,6 @@ namespace Sakura{
 	
 		virtual void update(InputManager& inputManager) = 0;
 
-		/* DO NOT CALL THESE FUNCTIONS EXPLICITLY */
-		virtual void IDraw(float fps) = 0;
-		virtual void initComponents() = 0;
-
 		void draw(std::string textureUniform, float fps){
 			glm::mat4 projectionMatrix = m_GUICamera.getCameraMatrix();
 			GLint pUniform = m_textureProgram->getUniformLocation(textureUniform);
@@ -166,6 +156,9 @@ namespace Sakura{
 		}
 
 	protected:
+		virtual void IDraw(float fps) = 0;
+		virtual void initComponents() = 0;
+
 		glm::vec2 m_GUICameraBounds;
 
 		IScreen* m_parentScreen = nullptr;

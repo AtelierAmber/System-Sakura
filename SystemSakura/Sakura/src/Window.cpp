@@ -44,20 +44,14 @@ namespace Sakura {
 
         //Set up our OpenGL context
         SDL_GLContext glContext = SDL_GL_CreateContext(m_sdlWindow);
-        if (glContext == nullptr) {
-            fatalError("SDL_GL context could not be created!");
-			return 1;
-        }
+		SAKURA_FATAL_ASSERT((glContext != nullptr), "SDL_GL context could not be created!");
 
         //Set up glew (optional but recommended)
         GLenum error = glewInit();
-        if (error != GLEW_OK) {
-            fatalError("Could not initialize glew!");
-			return 1;
-        }
+		SAKURA_FATAL_ASSERT((error == GLEW_OK), "Could not initialize glew with GLerror " + std::to_string(error) + "!");
 
         //Check the OpenGL version
-        std::printf("***   OpenGL Version: %s   ***\n", glGetString(GL_VERSION));
+        std::printf("\n***   OpenGL Version: %s   ***\n", glGetString(GL_VERSION));
 
         //Set the background color default to black as default
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

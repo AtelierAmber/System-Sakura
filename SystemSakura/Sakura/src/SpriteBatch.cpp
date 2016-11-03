@@ -192,21 +192,21 @@ void SpriteBatch::createRenderBatches() {
 	int err= glGetError();
 	if (err){
 		printf("%i", err);
-		fatalError("gl Error during initialization");
+		SAKURA_THROW_FATAL("gl Error during initialization");
 	}
     // Orphan the buffer (for speed)
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
 	err= glGetError();
 	if (err){
 		printf("%i", err);
-		fatalError("gl Error during initialization");
+		SAKURA_THROW_FATAL("gl Error during initialization");
 	}
     // Upload the data
     glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());
 	err= glGetError();
 	if (err){
 		printf("%i", err);
-		fatalError("gl Error during initialization");
+		SAKURA_THROW_FATAL("gl Error during initialization");
 	}
 
     // Unbind the VBO
@@ -214,7 +214,7 @@ void SpriteBatch::createRenderBatches() {
 	err= glGetError();
 	if (err){
 		printf("%i", err);
-		fatalError("gl Error during initialization");
+		SAKURA_THROW_FATAL("gl Error during initialization");
 	}
 
 }
@@ -224,68 +224,36 @@ void SpriteBatch::createVertexArray() {
     // Generate the VAO if it isn't already generated
 	if (m_vao == 0) {
 		glGenVertexArrays(1, &m_vao);
-		int err= glGetError();
-		if (err){
-			printf("%i", err);
-			fatalError("gl Error during initialization");
-		}
     }
     
     // Bind the VAO. All subsequent opengl calls will modify it's state.
 	glBindVertexArray(m_vao);
-	int err= glGetError();
-	if (err){
-		printf("%i", err);
-		fatalError("gl Error during initialization");
-	}
+	
 
     //Generate the VBO if it isn't already generated
 	if (m_vbo == 0) {
 		glGenBuffers(1, &m_vbo);
-		err= glGetError();
-		if (err){
-			printf("%i", err);
-			fatalError("gl Error during initialization");
-		}
-}
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		fatalError("gl Error during initialization");
+		
 	}
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	
 
     //This is the position attribute pointer
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		fatalError("gl Error during initialization");
-	}
+	
 	glEnableVertexAttribArray(0);
     //This is the color attribute pointer
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		fatalError("gl Error during initialization");
-	}
+	
 	glEnableVertexAttribArray(1);
     //This is the UV attribute pointer
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		fatalError("gl Error during initialization");
-	}
+	
 	glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		fatalError("gl Error during initialization");
-	}
+	
+	SAKURA_ASSERT_GL_ERROR(glGetError());
 }
 
 void SpriteBatch::sortGlyphs() {
