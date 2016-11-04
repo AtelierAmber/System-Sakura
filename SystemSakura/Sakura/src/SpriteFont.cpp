@@ -34,7 +34,7 @@ namespace Sakura {
 		}
 		TTF_Font* f = TTF_OpenFont(font, size);
 		if (f == nullptr) {
-			fprintf(stderr, "Failed to open TTF font %s\n", font);
+			(stderr, "Failed to open TTF font %s\n", font);
 			fflush(stderr);
 			throw 281;
 		}
@@ -91,7 +91,7 @@ namespace Sakura {
 
 		// Can a bitmap font be made?
 		if (!bestPartition) {
-			fprintf(stderr, "Failed to Map TTF font %s to texture. Try lowering resolution.\n", font);
+			std::fprintf(stderr, "Failed to Map TTF font %s to texture. Try lowering resolution.\n", font);
 			fflush(stderr);
 			throw 282;
 		}

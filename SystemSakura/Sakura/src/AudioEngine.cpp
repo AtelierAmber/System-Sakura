@@ -6,7 +6,7 @@ namespace Sakura{
 	void SoundEffect::play(int loops /* = 0 */){
 		if (Mix_PlayChannel(-1, m_chunk, loops) == -1){
 			if (Mix_PlayChannel(0, m_chunk, loops) == -1){
-				SAKURA_PRINT_ERROR(std::string("Mix_PlayChannel error: " + std::string(Mix_GetError())));
+				SAKURA_PRINT_ERROR(std::string("Mix_PlayChannel error: " + std::string(Mix_GetError())).c_str());
 			}
 		}
 	}
