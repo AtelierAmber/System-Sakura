@@ -33,7 +33,8 @@ namespace Sakura {
         //Bind the texture object
         glBindTexture(GL_TEXTURE_2D, texture.id);
         //Upload the pixels to the texture
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &(out[0]));
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, 
+          GL_RGBA, GL_UNSIGNED_BYTE, &(out[0]));
 
 		/* Setup all the texture parameters */
 

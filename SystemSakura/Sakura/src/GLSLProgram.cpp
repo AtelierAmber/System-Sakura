@@ -71,21 +71,21 @@ namespace Sakura {
         if (isLinked == GL_FALSE)
         {
             GLint maxLength = 0;
-			glGetProgramiv(m_programID, GL_INFO_LOG_LENGTH, &maxLength);
+            glGetProgramiv(m_programID, GL_INFO_LOG_LENGTH, &maxLength);
 
             //The maxLength includes the NULL character
             std::vector<char> errorLog(maxLength);
-			glGetProgramInfoLog(m_programID, maxLength, &maxLength, &errorLog[0]);
+            glGetProgramInfoLog(m_programID, maxLength, &maxLength, &errorLog[0]);
 
             //We don't need the program anymore.
-			glDeleteProgram(m_programID);
+            glDeleteProgram(m_programID);
             //Don't leak shaders either.
-			glDeleteShader(m_vertexShaderID);
-			glDeleteShader(m_fragmentShaderID);
+            glDeleteShader(m_vertexShaderID);
+            glDeleteShader(m_fragmentShaderID);
 
             //print the error log and quit
             std::printf("%s\n", &(errorLog[0]));
-			SAKURA_THROW_FATAL("\nShaders failed to link!");
+            SAKURA_THROW_FATAL("\nShaders failed to link!");
         }
 
         //Always detach shaders after a successful link.

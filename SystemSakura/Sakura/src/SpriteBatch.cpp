@@ -135,10 +135,11 @@ void SpriteBatch::renderBatch() {
 	glBindVertexArray(m_vao);
 
 	for (std::size_t i = 0; i < m_renderBatches.size(); i++) {
-        glBindTexture(GL_TEXTURE_2D, m_renderBatches[i].texture);
+    glBindTexture(GL_TEXTURE_2D, m_renderBatches[i].texture);
 
-        glDrawArrays(GL_TRIANGLES, m_renderBatches[i].offset, m_renderBatches[i].numVertices);
-    }
+    glDrawArrays(GL_TRIANGLES, m_renderBatches[i].offset, 
+      m_renderBatches[i].numVertices);
+  }
 
     glBindVertexArray(NULL);
 }
@@ -189,29 +190,16 @@ void SpriteBatch::createRenderBatches() {
 
     // Bind our VBO
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	int err= glGetError();
-	if (err){
-		printf("%i", err);
-		SAKURA_THROW_FATAL("gl Error during initialization");
-	}
+	
     // Orphan the buffer (for speed)
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		SAKURA_THROW_FATAL("gl Error during initialization");
-	}
+	
     // Upload the data
     glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());
-	err= glGetError();
-	if (err){
-		printf("%i", err);
-		SAKURA_THROW_FATAL("gl Error during initialization");
-	}
 
     // Unbind the VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-	err= glGetError();
+	GLuint err = glGetError();
 	if (err){
 		printf("%i", err);
 		SAKURA_THROW_FATAL("gl Error during initialization");

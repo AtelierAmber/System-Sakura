@@ -86,18 +86,6 @@
     <ClCompile Include="Sakura\src\AudioEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sakura\src\component\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sakura\src\component\CSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sakura\src\component\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sakura\src\component\CESManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sakura\src\Bounds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -179,18 +167,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sakura\include\SakuraErrors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sakura\include\component\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sakura\include\component\CSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sakura\include\component\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sakura\include\component\CESManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sakura\include\KeyCode.h">
